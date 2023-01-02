@@ -3,7 +3,7 @@ from typing import List
 
 from fastapi import APIRouter
 
-from rankings.model import Ranking
+from ranking.model import Ranking
 
 ROUTER = APIRouter()
 
@@ -21,6 +21,7 @@ def get_all() -> List[Ranking]:
     ]
     """
     return [Ranking(name="fake-name")]
+
 
 #
 # @ROUTER.get("/{name}")

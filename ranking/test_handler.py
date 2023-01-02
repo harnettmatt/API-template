@@ -1,7 +1,7 @@
 """Unit tests for /rankings routing handler"""
 from fastapi.testclient import TestClient
 
-from rankings.handler import ROUTER
+from ranking.handler import ROUTER
 
 
 class TestHandler:
