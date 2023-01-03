@@ -11,7 +11,7 @@ ROUTER = APIRouter()
 def get_mock_rating(identifier: str) -> Rating:
     """
     returns a mock rating for temporary stubbing purposes
-    @param identifier: id of the rating to fetch
+    @param identifier: specify an identifier to use for Rating object
     @return: Rating
     """
     return Rating(

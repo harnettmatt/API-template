@@ -1,4 +1,4 @@
-"""Unit tests for /rankings routing handler"""
+"""Unit tests for /ratings routing handler"""
 from fastapi.testclient import TestClient
 
 from rating.handler import ROUTER
