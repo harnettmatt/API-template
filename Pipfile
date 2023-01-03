@@ -11,7 +11,7 @@ pydantic = "*"
 
 [dev-packages]
 pytest = "*"
-httpx = "*"
+httpx = "*" # https://github.com/tiangolo/fastapi/issues/5656
 
 [requires]
 python_version = "3.9"
