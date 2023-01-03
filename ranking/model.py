@@ -3,6 +3,8 @@ from typing import List
 
 from pydantic import BaseModel
 
+from rating.model import Rating
+
 
 class Ranking(BaseModel):
     """
@@ -10,5 +12,4 @@ class Ranking(BaseModel):
     """
 
     name: str
-    # TODO: type ratings
-    ratings: List[dict] = []
+    ratings: List[Rating] = []
