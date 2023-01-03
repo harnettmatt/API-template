@@ -8,7 +8,7 @@ from ranking.model import Ranking
 ROUTER = APIRouter()
 
 
-@ROUTER.get("/")
+@ROUTER.get("")
 def get_all() -> List[Ranking]:
     """
     gets all rankings
