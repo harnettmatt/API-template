@@ -1,16 +1,15 @@
 """models for Rating"""
 from typing import Optional
 
-from pydantic import BaseModel
+from uuid_base_model.model import UUIDBaseModel
 
 
-class Rating(BaseModel):
+class Rating(UUIDBaseModel):
     """
     Pydantic model for Rating
     """
 
-    identifier: str  # TODO: uuid
     author: str  # TODO: type author as a "user"
     recipient: str  # TODO: type recipient as a "rateable object"
     rating: float
-    notes: Optional[str]
+    notes: Optional[str] = None

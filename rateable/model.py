@@ -1,11 +1,10 @@
 """models for Rateable"""
-from pydantic import BaseModel
+from uuid_base_model.model import UUIDBaseModel
 
 
-class Rateable(BaseModel):
+class Rateable(UUIDBaseModel):
     """
     Pydantic model for Rateable
     """
 
-    identifier: str  # TODO: uuid
     name: str

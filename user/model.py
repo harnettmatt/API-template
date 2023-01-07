@@ -1,12 +1,11 @@
 """models for User"""
-from pydantic import BaseModel
+from uuid_base_model.model import UUIDBaseModel
 
 
-class User(BaseModel):
+class User(UUIDBaseModel):
     """
     Pydantic model for User
     """
 
-    identifier: str  # TODO: uuid
     first_name: str
     last_name: str

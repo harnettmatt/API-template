@@ -1,12 +1,11 @@
 """models for Ranking"""
 from typing import List
 
-from pydantic import BaseModel
-
 from rating.model import Rating
+from uuid_base_model.model import UUIDBaseModel
 
 
-class Ranking(BaseModel):
+class Ranking(UUIDBaseModel):
     """
     Pydantic model for Ranking
     """
