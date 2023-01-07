@@ -11,6 +11,8 @@ pydantic = "*"
 
 [dev-packages]
 pytest = "*"
+pytest-mock = "*"
+black = "*"
 httpx = "*" # https://github.com/tiangolo/fastapi/issues/5656
 
 [requires]
