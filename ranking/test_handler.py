@@ -25,6 +25,6 @@ class TestHandler:
                     "last_name": "Smith",
                 },
                 "name": "fake-name",
-                "ratings": [],
+                "rating_ids": [],
             }
         ]

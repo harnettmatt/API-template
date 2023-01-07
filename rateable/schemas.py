@@ -1,7 +1,7 @@
 """models for Rateable"""
 from typing import List
+from uuid import UUID
 
-from ranking.models import Ranking
 from uuid_base_model.schemas import UUIDBaseModel
 
 
@@ -11,4 +11,4 @@ class Rateable(UUIDBaseModel):
     """
 
     name: str
-    rankings: List[Ranking] = []
+    ranking_ids: List[UUID] = []
