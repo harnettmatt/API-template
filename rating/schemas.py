@@ -1,9 +1,9 @@
 """models for Rating"""
 from typing import Optional
 
-from rateable.model import Rateable
-from user.model import User
-from uuid_base_model.model import UUIDBaseModel
+from rateable.schemas import Rateable
+from user.schemas import User
+from uuid_base_model.schemas import UUIDBaseModel
 
 
 class Rating(UUIDBaseModel):

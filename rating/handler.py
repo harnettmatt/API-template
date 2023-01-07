@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter
 
 from rating.fixtures import get_mock_rating
-from rating.model import Rating
+from rating.schemas import Rating
 
 ROUTER = APIRouter()
 

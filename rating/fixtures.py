@@ -2,7 +2,7 @@
 from uuid import UUID
 
 from rateable.fixtures import get_mock_rateable
-from rating.model import Rating
+from rating.schemas import Rating
 from user.fixtures import get_mock_user
 from utilities.fixtures import get_mock_uuid
 
