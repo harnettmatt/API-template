@@ -18,7 +18,7 @@ class TestHandler:
         assert response.status_code == 200
         assert response.json() == [
             {
-                "identifier": "fake-identifier",
+                "identifier": "00000000-0000-0000-0000-000000000000",
                 "first_name": "John",
                 "last_name": "Smith",
             }
