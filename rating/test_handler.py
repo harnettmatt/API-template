@@ -19,7 +19,7 @@ class TestHandler:
         assert response.json() == [
             {
                 "author": "fake-author",
-                "identifier": "fake-identifier",
+                "identifier": "00000000-0000-0000-0000-000000000000",
                 "notes": None,
                 "rating": 1.0,
                 "recipient": "fake-recipient",
