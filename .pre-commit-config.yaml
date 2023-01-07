@@ -25,6 +25,7 @@ repos:
     rev: 6.0.0
     hooks:
       - id: flake8
+        args: ['--config=flake8.cfg']
 
   - repo: https://github.com/pre-commit/mirrors-pylint
     rev: v2.7.4

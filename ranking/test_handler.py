@@ -19,6 +19,11 @@ class TestHandler:
         assert response.json() == [
             {
                 "identifier": "00000000-0000-0000-0000-000000000000",
+                "author": {
+                    "identifier": "00000000-0000-0000-0000-000000000000",
+                    "first_name": "John",
+                    "last_name": "Smith",
+                },
                 "name": "fake-name",
                 "ratings": [],
             }
