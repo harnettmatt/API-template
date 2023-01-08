@@ -2,18 +2,17 @@
 from sqlalchemy import Column, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from database.database import Base
+from persistable.models import Persistable
 from ranking_rateable.models import RankingRateable
 
 
-class Ranking(Base):
+class Ranking(Persistable):
     """
     SqlAlchemy model
     """
 
     __tablename__ = "rankings"
 
-    identifier = Column(String, primary_key=True, index=True)
     name = Column(String)
     author_id = Column(String, ForeignKey("users.identifier"))
 

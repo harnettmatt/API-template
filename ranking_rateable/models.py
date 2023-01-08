@@ -1,10 +1,10 @@
 """Module containing sqlalchemy models"""
 from sqlalchemy import Column, ForeignKey, String
 
-from database.database import Base
+from persistable.models import Persistable
 
 
-class RankingRateable(Base):
+class RankingRateable(Persistable):
     """
     SqlAlchemy model
     """

@@ -2,19 +2,18 @@
 from sqlalchemy import Column, Float, ForeignKey, String
 from sqlalchemy.orm import relationship
 
-from database.database import Base
+from persistable.models import Persistable
 from rateable.schemas import Rateable
 from user.schemas import User
 
 
-class Rating(Base):
+class Rating(Persistable):
     """
     SqlAlchemy model
     """
 
     __tablename__ = "ratings"
 
-    identifier = Column(String, primary_key=True, index=True)
     author_id = Column(String, ForeignKey("users.identifier"))
     recipient_id = Column(String, ForeignKey("rateables.identifier"))
     rating = Column(Float)
