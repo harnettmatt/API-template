@@ -18,10 +18,17 @@ class TestHandler:
         assert response.status_code == 200
         assert response.json() == [
             {
-                "author_id": "00000000-0000-0000-0000-000000000000",
+                "author": {
+                    "identifier": "00000000-0000-0000-0000-000000000000",
+                    "first_name": "John",
+                    "last_name": "Smith",
+                },
                 "identifier": "00000000-0000-0000-0000-000000000000",
                 "notes": None,
                 "rating": 1.0,
-                "recipient_id": "00000000-0000-0000-0000-000000000000",
+                "recipient": {
+                    "identifier": "00000000-0000-0000-0000-000000000000",
+                    "name": "fake-rateable",
+                },
             }
         ]

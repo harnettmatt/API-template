@@ -12,5 +12,5 @@ class RankingRateable(Base):
     __tablename__ = "rankings_rateables"
 
     identifier = Column(String, primary_key=True, index=True)
-    rating_id = Column(String, ForeignKey("rankings.identifer"))
-    author_id = Column(String, ForeignKey("rateables.identifer"))
+    rating_id = Column(String, ForeignKey("rankings.identifier"))
+    author_id = Column(String, ForeignKey("rateables.identifier"))

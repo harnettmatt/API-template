@@ -15,6 +15,6 @@ class Ranking(Base):
 
     identifier = Column(String, primary_key=True, index=True)
     name = Column(String)
-    author_id = Column(String, ForeignKey("users.identifer"))
+    author_id = Column(String, ForeignKey("users.identifier"))
 
     ratings = relationship("ratings", secondary=RankingRateable, backref="Ranking")
