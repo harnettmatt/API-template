@@ -1,9 +1,9 @@
 """models for Ranking"""
 from typing import List
 
-from rating.model import Rating
-from user.model import User
-from uuid_base_model.model import UUIDBaseModel
+from rating.schemas import Rating
+from user.schemas import User
+from uuid_base_model.schemas import UUIDBaseModel
 
 
 class Ranking(UUIDBaseModel):

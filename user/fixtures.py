@@ -1,7 +1,7 @@
 """Module containing helpful object constructors for mocking purposes"""
 from uuid import UUID
 
-from user.model import User
+from user.schemas import User
 from utilities.fixtures import get_mock_uuid
 
 

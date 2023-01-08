@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter
 
 from ranking.fixtures import get_mock_ranking
-from ranking.model import Ranking
+from ranking.schemas import Ranking
 
 ROUTER = APIRouter()
 

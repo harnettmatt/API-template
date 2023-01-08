@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter
 
 from rateable.fixtures import get_mock_rateable
-from rateable.model import Rateable
+from rateable.schemas import Rateable
 
 ROUTER = APIRouter()
 

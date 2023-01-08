@@ -1,7 +1,7 @@
 """Module containing helpful object constructors for mocking purposes"""
 from uuid import UUID
 
-from rateable.model import Rateable
+from rateable.schemas import Rateable
 from utilities.fixtures import get_mock_uuid
 
 
