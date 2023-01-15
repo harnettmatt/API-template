@@ -17,7 +17,7 @@ def get_all() -> List[Ranking]:
     [
         {
             "name":
-            "ratings": List[ratings]
+            "rateables": List[Rateable]
         }
     ]
     """
