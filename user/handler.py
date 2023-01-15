@@ -3,8 +3,8 @@ from typing import List
 
 from fastapi import APIRouter
 
-from user.fixtures import get_mock_user
 from user.schemas import User
+from user.tests.fixtures import get_mock_user
 
 ROUTER = APIRouter()
 

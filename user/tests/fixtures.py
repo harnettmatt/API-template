@@ -2,7 +2,7 @@
 from uuid import UUID
 
 from user.schemas import User
-from utilities.fixtures import get_mock_uuid
+from utilities.tests.fixtures import get_mock_uuid
 
 
 def get_mock_user(identifier: UUID = get_mock_uuid()) -> User:

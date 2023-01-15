@@ -1,15 +1,14 @@
 """Module containing sqlalchemy models"""
 from sqlalchemy import Column, String
 
-from database.database import Base
+from persistable.models import Persistable
 
 
-class Rateable(Base):
+class Rateable(Persistable):
     """
     SqlAlchemy model
     """
 
     __tablename__ = "rateables"
 
-    identifier = Column(String, primary_key=True, index=True)
     name = Column(String)

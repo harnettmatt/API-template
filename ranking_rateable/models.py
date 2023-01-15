@@ -1,16 +1,11 @@
 """Module containing sqlalchemy models"""
-from sqlalchemy import Column, ForeignKey, String
+from sqlalchemy import Column, ForeignKey, Table
 
-from database.database import Base
+from persistable.models import Base
 
-
-class RankingRateable(Base):
-    """
-    SqlAlchemy model
-    """
-
-    __tablename__ = "rankings_rateables"
-
-    identifier = Column(String, primary_key=True, index=True)
-    rating_id = Column(String, ForeignKey("rankings.identifier"))
-    author_id = Column(String, ForeignKey("rateables.identifier"))
+rankings_ratings = Table(
+    "rankings_ratings",
+    Base.metadata,
+    Column("ranking_id", ForeignKey("rankings.identifier"), primary_key=True),
+    Column("rating_id", ForeignKey("ratings.identifier"), primary_key=True),
+)
