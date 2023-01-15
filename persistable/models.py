@@ -1,17 +1,26 @@
-"""Module contains an abstract base class for objects that can be persisted"""
-from sqlalchemy import Column, String
+from copy import deepcopy
+
+from sqlalchemy import Column
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
 
-class Persistable(Base):  # type: ignore
-    """
-    Abstract class that defines the minimum attributes to be persistable
-    """
+class Persistable(Base):
+    __abstract__ = True
 
-    # TODO: does this need to be typed as absract so it can't be instantiated?
+    identifier = Column(UUID(as_uuid=True), primary_key=True)
 
-    __tablename__ = "abstract"
+    def __eq__(self, other):
+        classes_match = isinstance(other, self.__class__)
+        self_dict, other_dict = deepcopy(self.__dict__), deepcopy(other.__dict__)
+        # ignore SQLAlchemy internal stuff
+        self_dict.pop("_sa_instance_state", None)
+        other_dict.pop("_sa_instance_state", None)
+        attrs_match = self_dict == other_dict
 
-    identifier = Column(String, primary_key=True, index=True)
+        return classes_match and attrs_match
+
+    def __ne__(self, other):
+        return not self.__eq__(other)

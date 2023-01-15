@@ -1,10 +1,10 @@
 """Module containing helpful object constructors for mocking purposes"""
 from uuid import UUID
 
-from rateable.fixtures import get_mock_rateable
+from rateable.tests.fixtures import get_mock_rateable
 from rating.schemas import Rating
-from user.fixtures import get_mock_user
-from utilities.fixtures import get_mock_uuid
+from user.tests.fixtures import get_mock_user
+from utilities.tests.fixtures import get_mock_uuid
 
 
 def get_mock_rating(identifier: UUID = get_mock_uuid()) -> Rating:

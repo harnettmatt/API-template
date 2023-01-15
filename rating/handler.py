@@ -3,8 +3,8 @@ from typing import List
 
 from fastapi import APIRouter
 
-from rating.fixtures import get_mock_rating
 from rating.schemas import Rating
+from rating.tests.fixtures import get_mock_rating
 
 ROUTER = APIRouter()
 

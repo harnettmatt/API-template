@@ -9,12 +9,15 @@ fastapi = "*"
 requests = "*"
 pydantic = "*"
 sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
+sqlalchemy-stubs = "*"
 pytest = "*"
 pytest-mock = "*"
 black = "*"
 httpx = "*" # https://github.com/tiangolo/fastapi/issues/5656
+mypy = "*"
 
 [requires]
 python_version = "3.9"

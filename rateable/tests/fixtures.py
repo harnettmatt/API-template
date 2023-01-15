@@ -2,7 +2,7 @@
 from uuid import UUID
 
 from rateable.schemas import Rateable
-from utilities.fixtures import get_mock_uuid
+from utilities.tests.fixtures import get_mock_uuid
 
 
 def get_mock_rateable(identifier: UUID = get_mock_uuid()) -> Rateable:

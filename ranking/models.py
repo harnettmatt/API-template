@@ -1,9 +1,10 @@
 """Module containing sqlalchemy models"""
 from sqlalchemy import Column, ForeignKey, String
+from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from persistable.models import Persistable
-from ranking_rateable.models import RankingRateable
+from rating.models import Rating  # noqa
 
 
 class Ranking(Persistable):
@@ -14,6 +15,6 @@ class Ranking(Persistable):
     __tablename__ = "rankings"
 
     name = Column(String)
-    author_id = Column(String, ForeignKey("users.identifier"))
+    author_id = Column(UUID, ForeignKey("users.identifier"))
 
-    ratings = relationship("ratings", secondary=RankingRateable, backref="Ranking")
+    ratings = relationship("Rating", secondary="rankings_ratings")

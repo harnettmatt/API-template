@@ -2,8 +2,8 @@
 from uuid import UUID
 
 from ranking.schemas import Ranking
-from user.fixtures import get_mock_user
-from utilities.fixtures import get_mock_uuid
+from user.tests.fixtures import get_mock_user
+from utilities.tests.fixtures import get_mock_uuid
 
 
 def get_mock_ranking(identifier: UUID = get_mock_uuid()) -> Ranking:
