@@ -4,7 +4,8 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 from persistable.models import Persistable
-from rating.models import Rating  # noqa
+from rateable.models import Rateable  # noqa
+from user.models import User  # noqa
 
 
 class Ranking(Persistable):
@@ -17,4 +18,5 @@ class Ranking(Persistable):
     name = Column(String)
     author_id = Column(UUID, ForeignKey("users.identifier"))
 
-    ratings = relationship("Rating", secondary="rankings_ratings")
+    author = relationship("User")
+    rateables = relationship("Rateable", secondary="rankings_rateables")

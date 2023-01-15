@@ -3,9 +3,9 @@ from sqlalchemy import Column, ForeignKey, Table
 
 from persistable.models import Base
 
-rankings_ratings = Table(
-    "rankings_ratings",
+rankings_rateables = Table(
+    "rankings_rateables",
     Base.metadata,
     Column("ranking_id", ForeignKey("rankings.identifier"), primary_key=True),
-    Column("rating_id", ForeignKey("ratings.identifier"), primary_key=True),
+    Column("rateable_id", ForeignKey("rateables.identifier"), primary_key=True),
 )
