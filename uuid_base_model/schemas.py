@@ -11,4 +11,4 @@ class UUIDBaseModel(BaseModel):
     Pydantic model with autogenerating uuid capabilities
     """
 
-    identifier: UUID = Field(default_factory=Utilities.generate_uuid)
+    identifier: UUID = Field(default_factory=lambda: Utilities.generate_uuid())
