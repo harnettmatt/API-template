@@ -13,12 +13,8 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(engine)
 
 
-def get_db():
+def get_session():
     """
     Helper function responsible for creating and closing a db session
     """
-    database = SessionLocal()
-    try:
-        yield database
-    finally:
-        database.close()
+    return SessionLocal()

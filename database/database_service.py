@@ -1,5 +1,5 @@
 """Module containing all database setup"""
-from typing import List, Optional, Type
+from typing import Type
 from uuid import UUID
 
 from sqlalchemy.orm import Session
@@ -18,17 +18,13 @@ class DatabaseService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get(
-        self, identifier: UUID, model_type: Type[Persistable]
-    ) -> Optional[Persistable]:
+    def get(self, identifier: UUID, model_type: Type[Persistable]):
         """
         Gets instance from db for a given model and identifier
         """
         return self.session.query(model_type).filter_by(identifier=identifier).first()
 
-    def all(
-        self, model_type: Type[Persistable], skip: int = 0, limit: int = 100
-    ) -> List[Persistable]:
+    def all(self, model_type: Type[Persistable], skip: int = 0, limit: int = 100):
         """
         Gets all instances from db for a given model and optional limiting
         """

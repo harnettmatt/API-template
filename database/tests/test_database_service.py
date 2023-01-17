@@ -2,7 +2,7 @@
 
 import pytest
 
-from database.database import get_db
+from database.database import get_session
 from database.database_service import DatabaseService
 from database.tests.fixtures import (
     MockAPICreateInput,
@@ -18,7 +18,7 @@ def fixture_mock_api_create_input():
 
 @pytest.fixture(name="mock_db_service")
 def fixture_mock_db_service():
-    return DatabaseService(next(get_db()))
+    return DatabaseService(get_session())
 
 
 class TestDatabase:
