@@ -15,6 +15,6 @@ Base.metadata.create_all(engine)
 
 def get_session():
     """
-    Helper function responsible for creating and closing a db session
+    Helper function responsible for creating a db session
     """
     return SessionLocal()

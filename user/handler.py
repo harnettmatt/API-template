@@ -13,8 +13,7 @@ ROUTER = APIRouter()
 @ROUTER.get("/", response_model=list[schemas.User])
 def get_all() -> Any:
     """
-    gets all users
-    @return: List[User]
+    Getse all users
     """
     return DatabaseService().all(model_type=models.User)
 
@@ -22,7 +21,7 @@ def get_all() -> Any:
 @ROUTER.get("/{id}", response_model=schemas.User)
 def get(id: int) -> Any:
     """
-    gets a user by id
+    Gets a user by id
     """
     return DatabaseService(get_session()).get(id=id, model_type=models.User)
 
@@ -30,7 +29,7 @@ def get(id: int) -> Any:
 @ROUTER.post("/", response_model=schemas.User)
 def create(input: schemas.UserCreate) -> Any:
     """
-    Creates a User
+    Creates a user
     """
     return DatabaseService(get_session()).create(
         input_schema=input, model_type=models.User
@@ -40,7 +39,7 @@ def create(input: schemas.UserCreate) -> Any:
 @ROUTER.patch("/{id}", response_model=schemas.User)
 def update(id: int, input: schemas.UserUpdate) -> Any:
     """
-    Patches a User
+    Patch a user by id
     """
     return DatabaseService(get_session()).update(
         id=id, input_schema=input, model_type=models.User
@@ -50,6 +49,6 @@ def update(id: int, input: schemas.UserUpdate) -> Any:
 @ROUTER.delete("/{id}", response_model=schemas.User)
 def delete(id: int) -> Any:
     """
-    deletees a user by id
+    Deletes a user by id
     """
     return DatabaseService(get_session()).delete(id=id, model_type=models.User)
