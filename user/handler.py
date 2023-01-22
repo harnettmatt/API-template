@@ -47,6 +47,18 @@ def create(input: schemas.UserCreate) -> Any:
     return user
 
 
+@ROUTER.patch("/{id}", response_model=schemas.User)
+def update(id: int, input: schemas.UserUpdate) -> Any:
+    """
+    Patches a User
+    """
+    db_service = DatabaseService(get_session())
+    user = db_service.update(id=id, input_schema=input, model_type=models.User)
+    db_service.session.close()
+
+    return user
+
+
 @ROUTER.delete("/{id}", response_model=schemas.User)
 def delete(id: int) -> Any:
     """

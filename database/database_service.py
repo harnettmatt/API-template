@@ -44,7 +44,7 @@ class DatabaseService:
         """
         Deletes instance from db for a given model and id
         """
-        model_instance = self.get(id, model_type=model_type)
+        model_instance = self.get(id=id, model_type=model_type)
         self.session.delete(model_instance)
         self.session.commit()
         return model_instance
@@ -54,5 +54,14 @@ class DatabaseService:
         Gets instance from db, merges input_schema with db instance, update db instance
         """
         update_dict = input_schema.dict(exclude_none=True)
-        self.session.query(model_type).filter_by(id=id).update(update_dict)
+
+        model_instance = self.get(id=id, model_type=model_type)
+        model_instance_dict = jsonable_encoder(model_instance)
+        for key, val in update_dict.items():
+            if key in model_instance_dict:
+                setattr(model_instance, key, val)
+
+        self.session.add(model_instance)
         self.session.commit()
+        self.session.refresh(model_instance)
+        return model_instance

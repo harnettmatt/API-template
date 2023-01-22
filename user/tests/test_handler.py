@@ -3,6 +3,7 @@ import pytest
 from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 
+from user import models
 from user.handler import ROUTER
 from user.tests.fixtures import create_user
 
@@ -57,6 +58,29 @@ class TestHandler:
             "first_name": "John",
             "last_name": "Smith",
         }
+
+    @staticmethod
+    @pytest.mark.integtest
+    def test_patch():
+        """
+        GIVEN: a PATCH request to /users with a request body
+        THEN: a User is updated and returned
+        """
+
+        user_model = create_user()
+        request_body = {"first_name": "Jane", "last_name": "Doe"}
+        expected_user = models.User(id=user_model.id, **request_body)
+        with TestClient(ROUTER) as client:
+            response = client.patch(f"/{user_model.id}", json=request_body)
+
+        assert response.status_code == 200
+        assert response.json() == jsonable_encoder(expected_user)
+
+        with TestClient(ROUTER) as client:
+            response = client.get(f"/{expected_user.id}")
+
+        assert response.status_code == 200
+        assert response.json() == jsonable_encoder(expected_user)
 
     @staticmethod
     @pytest.mark.integtest

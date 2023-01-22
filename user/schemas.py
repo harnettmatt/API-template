@@ -1,4 +1,6 @@
 """models for User"""
+from typing import Optional
+
 from pydantic import BaseModel
 
 from id_base_model.schemas import IDBaseModel
@@ -20,3 +22,8 @@ class User(IDBaseModel):
 class UserCreate(BaseModel):
     first_name: str
     last_name: str
+
+
+class UserUpdate(BaseModel):
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
