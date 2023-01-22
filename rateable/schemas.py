@@ -1,9 +1,9 @@
 """models for Rateable"""
 
-from uuid_base_model.schemas import UUIDBaseModel
+from id_base_model.schemas import IDBaseModel
 
 
-class Rateable(UUIDBaseModel):
+class Rateable(IDBaseModel):
     """
     Pydantic model for Rateable
     """

@@ -1,16 +1,16 @@
 from typing import Optional
 
+from pydantic import BaseModel
 from sqlalchemy import Column, String
 
 from persistable.models import Persistable
-from uuid_base_model.schemas import UUIDBaseModel
 
 
-class MockAPICreateInput(UUIDBaseModel):
+class MockAPICreateInput(BaseModel):
     foo: str
 
 
-class MockAPIUpdateInput(UUIDBaseModel):
+class MockAPIUpdateInput(BaseModel):
     foo: Optional[str]
 
 

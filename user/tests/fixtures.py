@@ -1,14 +1,21 @@
 """Module containing helpful object constructors for mocking purposes"""
-from uuid import UUID
+from database.database import get_session
+from database.database_service import DatabaseService
+from user import models, schemas
+from utilities.tests.fixtures import get_mock_id
 
-from user.schemas import User
-from utilities.tests.fixtures import get_mock_uuid
 
-
-def get_mock_user(identifier: UUID = get_mock_uuid()) -> User:
+def get_mock_user(id: int = get_mock_id()) -> schemas.User:
     """
     returns a mock User
-    @param identifier: specify an identifier to use for User object
+    @param id: specify an id to use for User object
     @return: User
     """
-    return User(identifier=identifier, first_name="John", last_name="Smith")
+    return schemas.User(id=id, first_name="John", last_name="Smith")
+
+
+def create_user() -> models.User:
+    user_input = schemas.UserCreate(first_name="John", last_name="Smith")
+    return DatabaseService(get_session()).create(
+        input_schema=user_input, model_type=models.User
+    )
