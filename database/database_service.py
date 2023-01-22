@@ -1,4 +1,4 @@
-"""Module containing all database setup"""
+"""Module responsible for interacting with db via sqlalchemy"""
 from typing import Optional, Type
 
 from fastapi.encoders import jsonable_encoder
@@ -11,7 +11,7 @@ from persistable.models import Persistable
 
 class DatabaseService:
     """
-    Service that interacts with the db layer
+    Service that interacts with the db
     """
 
     session: Session
