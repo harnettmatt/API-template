@@ -26,6 +26,20 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
+    def test_get():
+        """
+        GIVEN: a GET request to /user/{id}
+        THEN: the corresponding user is returned
+        """
+        user_model = create_user()
+        with TestClient(ROUTER) as client:
+            response = client.get(f"/{user_model.id}")
+
+        assert response.status_code == 200
+        assert jsonable_encoder(user_model) == response.json()
+
+    @staticmethod
+    @pytest.mark.integtest
     def test_create():
         """
         GIVEN: a POST request to /users with a request body
