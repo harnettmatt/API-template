@@ -1,11 +1,11 @@
 """Module containing all database setup"""
 from typing import Type
-from uuid import UUID
 
+from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from persistable.models import Persistable
-from uuid_base_model.schemas import UUIDBaseModel
 
 
 class DatabaseService:
@@ -18,11 +18,11 @@ class DatabaseService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get(self, identifier: UUID, model_type: Type[Persistable]):
+    def get(self, id: int, model_type: Type[Persistable]):
         """
-        Gets instance from db for a given model and identifier
+        Gets instance from db for a given model and id
         """
-        return self.session.query(model_type).filter_by(identifier=identifier).first()
+        return self.session.query(model_type).filter_by(id=id).first()
 
     def all(self, model_type: Type[Persistable], skip: int = 0, limit: int = 100):
         """
@@ -30,29 +30,27 @@ class DatabaseService:
         """
         return self.session.query(model_type).offset(skip).limit(limit).all()
 
-    def create(self, input_schema: UUIDBaseModel, model_type: Type[Persistable]):
+    def create(self, input_schema: BaseModel, model_type: Type[Persistable]):
         """
         Creates instance in db for a given pydantic input schema and model
         """
-        model_instance = model_type(**input_schema.dict())
+        model_instance = model_type(**jsonable_encoder(input_schema))
         self.session.add(model_instance)
         self.session.commit()
         self.session.refresh(model_instance)
         return model_instance
 
-    def delete(self, identifier: UUID, model_type: Type[Persistable]):
+    def delete(self, id: int, model_type: Type[Persistable]):
         """
-        Deletes instance from db for a given model and identifier
+        Deletes instance from db for a given model and id
         """
-        self.session.query(model_type).filter_by(identifier=identifier).delete()
+        self.session.query(model_type).filter_by(id=id).delete()
         self.session.commit()
 
-    def update(self, input_schema: UUIDBaseModel, model_type: Type[Persistable]):
+    def update(self, id: int, input_schema: BaseModel, model_type: Type[Persistable]):
         """
         Gets instance from db, merges input_schema with db instance, update db instance
         """
         update_dict = input_schema.dict(exclude_none=True)
-        self.session.query(model_type).filter_by(
-            identifier=input_schema.identifier
-        ).update(update_dict)
+        self.session.query(model_type).filter_by(id=id).update(update_dict)
         self.session.commit()

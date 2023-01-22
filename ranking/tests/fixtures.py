@@ -1,15 +1,13 @@
 """Module containing helpful object constructors for mocking purposes"""
-from uuid import UUID
-
 from ranking.schemas import Ranking
 from user.tests.fixtures import get_mock_user
-from utilities.tests.fixtures import get_mock_uuid
+from utilities.tests.fixtures import get_mock_id
 
 
-def get_mock_ranking(identifier: UUID = get_mock_uuid()) -> Ranking:
+def get_mock_ranking(id: int = get_mock_id()) -> Ranking:
     """
     returns a mock Ranking
-    @param identifier: specify an identifier to use for User object
+    @param id: specify an id to use for User object
     @return: User
     """
-    return Ranking(identifier=identifier, author=get_mock_user(), name="fake-name")
+    return Ranking(id=id, author=get_mock_user(), name="fake-name")

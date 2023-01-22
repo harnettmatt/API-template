@@ -1,39 +1,35 @@
 """Routing handler for /users"""
-from typing import List
+from typing import Any
 
 from fastapi import APIRouter
 
 from database.database import get_session
 from database.database_service import DatabaseService
-from user.models import User as UserModel
-from user.schemas import User as UserSchema
-from user.schemas import UserCreate
+from user import models, schemas
 
 ROUTER = APIRouter()
 
 
-@ROUTER.get("/")
-def get_all() -> List[UserSchema]:
+@ROUTER.get("/", response_model=list[schemas.User])
+def get_all() -> Any:
     """
     gets all users
     @return: List[User]
     """
     db_service = DatabaseService(get_session())
-    users = db_service.all(model_type=UserModel)
+    users = db_service.all(model_type=models.User)
     db_service.session.close()
 
-    return [UserSchema(**user.__dict__) for user in users]
+    return users
 
 
-@ROUTER.post("/")
-def create(input: UserCreate) -> UserSchema:
+@ROUTER.post("/", response_model=schemas.User)
+def create(input: schemas.UserCreate) -> Any:
     """
     Creates a User
     """
     db_service = DatabaseService(get_session())
-    model_instance = db_service.create(
-        input_schema=UserSchema(**input.dict()), model_type=UserModel
-    )
+    user = db_service.create(input_schema=input, model_type=models.User)
     db_service.session.close()
 
-    return UserSchema(**model_instance.__dict__)
+    return user

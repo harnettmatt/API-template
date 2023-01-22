@@ -1,9 +1,9 @@
 """Unit tests for /users routing handler"""
 import pytest
+from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
 
 from user.handler import ROUTER
-from user.schemas import User as UserSchema
 from user.tests.fixtures import create_user
 
 
@@ -21,11 +21,8 @@ class TestHandler:
         with TestClient(ROUTER) as client:
             response = client.get("/")
 
-        user_schema_dict = UserSchema(**user_model.__dict__).dict()
-        user_schema_dict["identifier"] = str(user_schema_dict["identifier"])
         assert response.status_code == 200
-        response_dict = response.json()
-        assert user_schema_dict in response_dict
+        assert jsonable_encoder(user_model) in response.json()
 
     @staticmethod
     @pytest.mark.integtest
@@ -40,8 +37,8 @@ class TestHandler:
             response = client.post("/", json=request_body)
         assert response.status_code == 200
         response_dict = response.json()
-        assert "identifier" in response_dict
-        del response_dict["identifier"]
+        assert "id" in response_dict
+        del response_dict["id"]
         assert response_dict == {
             "first_name": "John",
             "last_name": "Smith",

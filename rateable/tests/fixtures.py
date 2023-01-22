@@ -1,17 +1,15 @@
 """Module containing helpful object constructors for mocking purposes"""
-from uuid import UUID
-
 from rateable.schemas import Rateable
-from utilities.tests.fixtures import get_mock_uuid
+from utilities.tests.fixtures import get_mock_id
 
 
-def get_mock_rateable(identifier: UUID = get_mock_uuid()) -> Rateable:
+def get_mock_rateable(id: int = get_mock_id()) -> Rateable:
     """
     returns a mock Rateable
-    @param identifier: specify an identifier to use for Rateable object
+    @param id: specify an id to use for Rateable object
     @return: Rateable
     """
     return Rateable(
-        identifier=identifier,
+        id=id,
         name="fake-rateable",
     )
