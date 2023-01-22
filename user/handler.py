@@ -23,6 +23,18 @@ def get_all() -> Any:
     return users
 
 
+@ROUTER.get("/{id}", response_model=schemas.User)
+def get(id: int) -> Any:
+    """
+    gets a user by id
+    """
+    db_service = DatabaseService(get_session())
+    user = db_service.get(id=id, model_type=models.User)
+    db_service.session.close()
+
+    return user
+
+
 @ROUTER.post("/", response_model=schemas.User)
 def create(input: schemas.UserCreate) -> Any:
     """
