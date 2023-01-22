@@ -44,8 +44,10 @@ class DatabaseService:
         """
         Deletes instance from db for a given model and id
         """
-        self.session.query(model_type).filter_by(id=id).delete()
+        model_instance = self.get(id, model_type=model_type)
+        self.session.delete(model_instance)
         self.session.commit()
+        return model_instance
 
     def update(self, id: int, input_schema: BaseModel, model_type: Type[Persistable]):
         """
