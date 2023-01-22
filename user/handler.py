@@ -45,3 +45,15 @@ def create(input: schemas.UserCreate) -> Any:
     db_service.session.close()
 
     return user
+
+
+@ROUTER.delete("/{id}", response_model=schemas.User)
+def delete(id: int) -> Any:
+    """
+    deletees a user by id
+    """
+    db_service = DatabaseService(get_session())
+    user = db_service.delete(id=id, model_type=models.User)
+    db_service.session.close()
+
+    return user
