@@ -76,6 +76,19 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
+    def test_get_404(test_client):
+        """
+        GIVEN: a GET request to /users/{id}
+        WHEN: the user does not exist
+        THEN: a 404 error is returned
+        """
+        # unit under test
+        response = test_client.get(f"/users/{9999999}")
+
+        assert response.status_code == 404
+
+    @staticmethod
+    @pytest.mark.integtest
     def test_create(test_client):
         """
         GIVEN: a POST request to /users with a request body
@@ -121,6 +134,21 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
+    def test_patch_404(test_client):
+        """
+        GIVEN: a PATCH request to /users/{id}
+        WHEN: the user does not exist
+        THEN: a 404 error is returned
+        """
+        request_body = {"first_name": "Jane", "last_name": "Doe"}
+
+        # unit under test
+        response = test_client.patch(f"/users/{9999999}", json=request_body)
+
+        assert response.status_code == 404
+
+    @staticmethod
+    @pytest.mark.integtest
     def test_delete(test_client):
         """
         GIVEN: a DELETE request to /users/{id}
@@ -135,5 +163,18 @@ class TestHandler:
         assert jsonable_encoder(user_model) == response.json()
 
         response = test_client.get(f"users/{user_model.id}")
+
+        assert response.status_code == 404
+
+    @staticmethod
+    @pytest.mark.integtest
+    def test_delete_404(test_client):
+        """
+        GIVEN: a DELETE request to /users/{id}
+        WHEN: the user does not exist
+        THEN: a 404 error is returned
+        """
+        # unit under test
+        response = test_client.delete(f"/users/{9999999}")
 
         assert response.status_code == 404
