@@ -1,6 +1,7 @@
 """Module responsible for interacting with db via sqlalchemy"""
 from typing import Type
 
+from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
@@ -22,7 +23,11 @@ class DatabaseService:
         """
         Gets instance from db for a given model and id
         """
-        return self.session.query(model_type).get(id)
+        user = self.session.query(model_type).get(id)
+        if user is None:
+            raise HTTPException(404, "Not Found")
+
+        return user
 
     def all(self, model_type: Type[Persistable], skip: int = 0, limit: int = 100):
         """
@@ -48,6 +53,7 @@ class DatabaseService:
         """
         model_instance = self.get(id=id, model_type=model_type)
         self.session.delete(model_instance)
+        self.session.commit()
 
         return model_instance
 
