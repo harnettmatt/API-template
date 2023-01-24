@@ -1,4 +1,3 @@
-from database.tests.fixtures import MockPersistable  # noqa
 from persistable.models import Persistable  # noqa
 from ranking.models import Ranking  # noqa
 from ranking_rateable.models import rankings_rateables  # noqa
