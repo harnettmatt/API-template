@@ -17,4 +17,8 @@ def get_session():
     """
     Helper function responsible for creating a db session
     """
-    return SessionLocal()
+    session = SessionLocal()
+    try:
+        yield session
+    finally:
+        session.close()
