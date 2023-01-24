@@ -78,7 +78,7 @@ class TestHandler:
     @pytest.mark.integtest
     def test_get_404(test_client):
         """
-        GIVEN: a DELETE request to /users/{id}
+        GIVEN: a GET request to /users/{id}
         WHEN: the user does not exist
         THEN: a 404 error is returned
         """
