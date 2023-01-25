@@ -1,5 +1,5 @@
 """Module containing sqlalchemy models"""
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
 from persistable.models import Persistable
@@ -15,7 +15,7 @@ class Ranking(Persistable):
     __tablename__ = "rankings"
 
     name = Column(String)
-    author_id = Column(Integer, ForeignKey("users.id"))
-
-    author = relationship("User")
     rateables = relationship("Rateable", secondary="rankings_rateables")
+    # TODO: https://github.com/harnettmatt/rankings/issues/54
+    # author_id = Column(Integer, ForeignKey("users.id"))
+    # author = relationship("User")
