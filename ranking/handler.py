@@ -14,7 +14,7 @@ ROUTER = APIRouter()
 @ROUTER.get("/", response_model=list[schemas.Ranking])
 def get_all(session: Session = Depends(get_session)) -> Any:
     """
-    Getse all rankings
+    Gets all rankings
     """
     return DatabaseService(session).all(model_type=models.Ranking)
 
