@@ -1,4 +1,4 @@
-"""models for Ranking"""
+"""models for Group"""
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -7,9 +7,9 @@ from id_base_model.schemas import IDBaseModel
 from item.schemas import Item
 
 
-class Ranking(IDBaseModel):
+class Group(IDBaseModel):
     """
-    Pydantic model for Ranking
+    Pydantic model for Group
     """
 
     name: str
@@ -21,11 +21,11 @@ class Ranking(IDBaseModel):
         orm_mode = True
 
 
-class RankingCreate(BaseModel):
+class GroupCreate(BaseModel):
     name: str
     # TODO: https://github.com/harnettmatt/rankings/issues/54
     # author: User
 
 
-class RankingUpdate(BaseModel):
+class GroupUpdate(BaseModel):
     name: Optional[str] = None

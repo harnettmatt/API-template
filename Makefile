@@ -1,8 +1,8 @@
 # All
 start: db-start-detach app-start
 
-get-rankings:
-	curl http://127.0.0.1:8000/rankings | jq
+get-groups:
+	curl http://127.0.0.1:8000/groups | jq
 
 docs:
 	open http://127.0.0.1:8000/docs
