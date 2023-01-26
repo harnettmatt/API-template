@@ -4,7 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from id_base_model.schemas import IDBaseModel
-from rateable.schemas import Rateable
+from item.schemas import Item
 
 
 class Ranking(IDBaseModel):
@@ -13,7 +13,7 @@ class Ranking(IDBaseModel):
     """
 
     name: str
-    rateables: List[Rateable] = []
+    items: List[Item] = []
     # TODO: https://github.com/harnettmatt/rankings/issues/54
     # author: User
 

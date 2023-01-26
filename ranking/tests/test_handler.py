@@ -36,10 +36,10 @@ def fixture_test_client():
     return TestClient(APP)
 
 
-def create_ranking() -> models.Ranking:
+def create_ranking() -> models.Item:
     ranking_input = schemas.RankingCreate(name="Ramen")
     return DatabaseService(next(override_get_session())).create(
-        input_schema=ranking_input, model_type=models.Ranking
+        input_schema=ranking_input, model_type=models.Item
     )
 
 
@@ -92,7 +92,7 @@ class TestHandler:
         response_dict = response.json()
         assert "id" in response_dict
         del response_dict["id"]
-        assert response_dict == {"name": "Ramen", "rateables": []}
+        assert response_dict == {"name": "Ramen", "items": []}
 
     @staticmethod
     @pytest.mark.integtest

@@ -4,11 +4,11 @@ from sqlalchemy import Column, String
 from persistable.models import Persistable
 
 
-class Rateable(Persistable):
+class Item(Persistable):
     """
     SqlAlchemy model
     """
 
-    __tablename__ = "rateables"
+    __tablename__ = "items"
 
     name = Column(String)

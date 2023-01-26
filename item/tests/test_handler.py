@@ -1,4 +1,4 @@
-"""Unit tests for /rateables routing handler"""
+"""Unit tests for /items routing handler"""
 import pytest
 from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
@@ -7,9 +7,9 @@ from sqlalchemy.orm import sessionmaker
 
 from database.database import get_session
 from database.database_service import DatabaseService
+from item import models, schemas
 from main import APP
 from persistable.models import Base
-from rateable import models, schemas
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -36,57 +36,57 @@ def fixture_test_client():
     return TestClient(APP)
 
 
-def create_rateable() -> models.Rateable:
-    rateable_input = schemas.RateableCreate(name="Minca")
+def create_item() -> models.Item:
+    item_input = schemas.ItemCreate(name="Minca")
     return DatabaseService(next(override_get_session())).create(
-        input_schema=rateable_input, model_type=models.Rateable
+        input_schema=item_input, model_type=models.Item
     )
 
 
 class TestHandler:
-    """Unit tests for /rateables routing handler"""
+    """Unit tests for /items routing handler"""
 
     @staticmethod
     @pytest.mark.integtest
     def test_get_all(test_client):
         """
-        GIVEN: a GET request to /rateables
-        THEN: a list of Rateables is returned
+        GIVEN: a GET request to /items
+        THEN: a list of Items is returned
         """
-        rateable_model = create_rateable()
-        response = test_client.get("/rateables/")
+        item_model = create_item()
+        response = test_client.get("/items/")
 
-        expected_rateable = schemas.Rateable(**jsonable_encoder(rateable_model))
+        expected_item = schemas.Item(**jsonable_encoder(item_model))
         assert response.status_code == 200
-        assert expected_rateable in response.json()
+        assert expected_item in response.json()
 
     @staticmethod
     @pytest.mark.integtest
     def test_get(test_client):
         """
-        GIVEN: a GET request to /rateables/{id}
-        THEN: the corresponding rateable is returned
+        GIVEN: a GET request to /items/{id}
+        THEN: the corresponding item is returned
         """
-        rateable_model = create_rateable()
+        item_model = create_item()
 
         # unit under test
-        response = test_client.get(f"/rateables/{rateable_model.id}")
+        response = test_client.get(f"/items/{item_model.id}")
 
-        expected_rateable = schemas.Rateable(**jsonable_encoder(rateable_model))
+        expected_item = schemas.Item(**jsonable_encoder(item_model))
         assert response.status_code == 200
-        assert expected_rateable == response.json()
+        assert expected_item == response.json()
 
     @staticmethod
     @pytest.mark.integtest
     def test_create(test_client):
         """
-        GIVEN: a POST request to /rateables with a request body
-        THEN: a Rateable is created and returned
+        GIVEN: a POST request to /items with a request body
+        THEN: a Item is created and returned
         """
         request_body = {"name": "Minca"}
 
         # unit under test
-        response = test_client.post("/rateables/", json=request_body)
+        response = test_client.post("/items/", json=request_body)
 
         assert response.status_code == 200
         response_dict = response.json()
@@ -98,43 +98,41 @@ class TestHandler:
     @pytest.mark.integtest
     def test_patch(test_client):
         """
-        GIVEN: a PATCH request to /rateables with a request body
-        THEN: a Rateable is updated and returned
+        GIVEN: a PATCH request to /items with a request body
+        THEN: a Item is updated and returned
         """
 
-        rateable_model = create_rateable()
+        item_model = create_item()
         request_body = {"name": "New Name"}
-        expected_rateable = schemas.Rateable(id=rateable_model.id, **request_body)
+        expected_item = schemas.Item(id=item_model.id, **request_body)
 
         # unit under test
-        response = test_client.patch(
-            f"/rateables/{rateable_model.id}", json=request_body
-        )
+        response = test_client.patch(f"/items/{item_model.id}", json=request_body)
 
         assert response.status_code == 200
-        assert response.json() == expected_rateable
+        assert response.json() == expected_item
 
-        response = test_client.get(f"/rateables/{expected_rateable.id}")
+        response = test_client.get(f"/items/{expected_item.id}")
 
         assert response.status_code == 200
-        assert response.json() == expected_rateable
+        assert response.json() == expected_item
 
     @staticmethod
     @pytest.mark.integtest
     def test_delete(test_client):
         """
-        GIVEN: a DELETE request to /rateables/{id}
-        THEN: the corresponding rateable is returned
+        GIVEN: a DELETE request to /items/{id}
+        THEN: the corresponding item is returned
         """
-        rateable_model = create_rateable()
-        expected_rateable = schemas.Rateable(**jsonable_encoder(rateable_model))
+        item_model = create_item()
+        expected_item = schemas.Item(**jsonable_encoder(item_model))
 
         # unit under test
-        response = test_client.delete(f"/rateables/{rateable_model.id}")
+        response = test_client.delete(f"/items/{item_model.id}")
 
         assert response.status_code == 200
-        assert expected_rateable == response.json()
+        assert expected_item == response.json()
 
-        response = test_client.get(f"rateables/{rateable_model.id}")
+        response = test_client.get(f"items/{item_model.id}")
 
         assert response.status_code == 404
