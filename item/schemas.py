@@ -1,4 +1,4 @@
-"""models for Rateable"""
+"""models for Item"""
 
 from typing import Optional
 
@@ -7,9 +7,9 @@ from pydantic import BaseModel
 from id_base_model.schemas import IDBaseModel
 
 
-class Rateable(IDBaseModel):
+class Item(IDBaseModel):
     """
-    Pydantic model for Rateable
+    Pydantic model for Item
     """
 
     name: str
@@ -18,9 +18,9 @@ class Rateable(IDBaseModel):
         orm_mode = True
 
 
-class RateableCreate(BaseModel):
+class ItemCreate(BaseModel):
     name: str
 
 
-class RateableUpdate(BaseModel):
+class ItemUpdate(BaseModel):
     name: Optional[str]
