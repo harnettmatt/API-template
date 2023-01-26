@@ -15,7 +15,7 @@ class Group(Persistable):
     __tablename__ = "groups"
 
     name = Column(String)
-    items = relationship("Item", secondary="groups_items")
+    items = relationship("Item", secondary="memberships")
     # TODO: https://github.com/harnettmatt/rankings/issues/54
     # author_id = Column(Integer, ForeignKey("users.id"))
     # author = relationship("User")

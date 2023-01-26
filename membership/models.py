@@ -3,8 +3,8 @@ from sqlalchemy import Column, ForeignKey, Table
 
 from persistable.models import Base
 
-groups_items = Table(
-    "groups_items",
+memberships = Table(
+    "memberships",
     Base.metadata,
     Column("group_id", ForeignKey("groups.id"), primary_key=True),
     Column("item_id", ForeignKey("items.id"), primary_key=True),
