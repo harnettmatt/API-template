@@ -1,11 +1,11 @@
 """Module containing sqlalchemy models"""
-from sqlalchemy import Column, ForeignKey, Table
+from sqlalchemy import Column, ForeignKey, Integer
 
-from persistable.models import Base
+from persistable.models import Persistable
 
-memberships = Table(
-    "memberships",
-    Base.metadata,
-    Column("group_id", ForeignKey("groups.id"), primary_key=True),
-    Column("item_id", ForeignKey("items.id"), primary_key=True),
-)
+
+class Membership(Persistable):
+    __tablename__ = "memberships"
+
+    group_id = Column(Integer, ForeignKey("groups.id"))
+    item_id = Column(Integer, ForeignKey("items.id"))
