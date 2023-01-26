@@ -7,15 +7,15 @@ from persistable.models import Persistable
 from user.models import User  # noqa
 
 
-class Ranking(Persistable):
+class Group(Persistable):
     """
     SqlAlchemy model
     """
 
-    __tablename__ = "rankings"
+    __tablename__ = "groups"
 
     name = Column(String)
-    items = relationship("Item", secondary="rankings_items")
+    items = relationship("Item", secondary="groups_items")
     # TODO: https://github.com/harnettmatt/rankings/issues/54
     # author_id = Column(Integer, ForeignKey("users.id"))
     # author = relationship("User")

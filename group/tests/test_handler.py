@@ -1,4 +1,4 @@
-"""Unit tests for /rankings routing handler"""
+"""Unit tests for /groups routing handler"""
 import pytest
 from fastapi.encoders import jsonable_encoder
 from fastapi.testclient import TestClient
@@ -7,9 +7,9 @@ from sqlalchemy.orm import sessionmaker
 
 from database.database import get_session
 from database.database_service import DatabaseService
+from group import models, schemas
 from main import APP
 from persistable.models import Base
-from ranking import models, schemas
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -36,57 +36,57 @@ def fixture_test_client():
     return TestClient(APP)
 
 
-def create_ranking() -> models.Item:
-    ranking_input = schemas.RankingCreate(name="Ramen")
+def create_group() -> models.Item:
+    group_input = schemas.GroupCreate(name="Ramen")
     return DatabaseService(next(override_get_session())).create(
-        input_schema=ranking_input, model_type=models.Item
+        input_schema=group_input, model_type=models.Item
     )
 
 
 class TestHandler:
-    """Unit tests for /rankings routing handler"""
+    """Unit tests for /groups routing handler"""
 
     @staticmethod
     @pytest.mark.integtest
     def test_get_all(test_client):
         """
-        GIVEN: a GET request to /rankings
-        THEN: a list of Rankings is returned
+        GIVEN: a GET request to /groups
+        THEN: a list of Groups is returned
         """
-        ranking_model = create_ranking()
-        response = test_client.get("/rankings/")
+        group_model = create_group()
+        response = test_client.get("/groups/")
 
-        expected_ranking = schemas.Ranking(**jsonable_encoder(ranking_model))
+        expected_group = schemas.Group(**jsonable_encoder(group_model))
         assert response.status_code == 200
-        assert expected_ranking in response.json()
+        assert expected_group in response.json()
 
     @staticmethod
     @pytest.mark.integtest
     def test_get(test_client):
         """
-        GIVEN: a GET request to /rankings/{id}
-        THEN: the corresponding ranking is returned
+        GIVEN: a GET request to /groups/{id}
+        THEN: the corresponding group is returned
         """
-        ranking_model = create_ranking()
+        group_model = create_group()
 
         # unit under test
-        response = test_client.get(f"/rankings/{ranking_model.id}")
+        response = test_client.get(f"/groups/{group_model.id}")
 
-        expected_ranking = schemas.Ranking(**jsonable_encoder(ranking_model))
+        expected_group = schemas.Group(**jsonable_encoder(group_model))
         assert response.status_code == 200
-        assert expected_ranking == response.json()
+        assert expected_group == response.json()
 
     @staticmethod
     @pytest.mark.integtest
     def test_create(test_client):
         """
-        GIVEN: a POST request to /rankings with a request body
-        THEN: a Ranking is created and returned
+        GIVEN: a POST request to /groups with a request body
+        THEN: a Group is created and returned
         """
         request_body = {"name": "Ramen"}
 
         # unit under test
-        response = test_client.post("/rankings/", json=request_body)
+        response = test_client.post("/groups/", json=request_body)
 
         assert response.status_code == 200
         response_dict = response.json()
@@ -98,41 +98,41 @@ class TestHandler:
     @pytest.mark.integtest
     def test_patch(test_client):
         """
-        GIVEN: a PATCH request to /rankings with a request body
-        THEN: a Ranking is updated and returned
+        GIVEN: a PATCH request to /groups with a request body
+        THEN: a Group is updated and returned
         """
 
-        ranking_model = create_ranking()
+        group_model = create_group()
         request_body = {"name": "NY Ramen"}
-        expected_ranking = schemas.Ranking(id=ranking_model.id, **request_body)
+        expected_group = schemas.Group(id=group_model.id, **request_body)
 
         # unit under test
-        response = test_client.patch(f"/rankings/{ranking_model.id}", json=request_body)
+        response = test_client.patch(f"/groups/{group_model.id}", json=request_body)
 
         assert response.status_code == 200
-        assert response.json() == expected_ranking
+        assert response.json() == expected_group
 
-        response = test_client.get(f"/rankings/{expected_ranking.id}")
+        response = test_client.get(f"/groups/{expected_group.id}")
 
         assert response.status_code == 200
-        assert response.json() == expected_ranking
+        assert response.json() == expected_group
 
     @staticmethod
     @pytest.mark.integtest
     def test_delete(test_client):
         """
-        GIVEN: a DELETE request to /rankings/{id}
-        THEN: the corresponding ranking is returned
+        GIVEN: a DELETE request to /groups/{id}
+        THEN: the corresponding group is returned
         """
-        ranking_model = create_ranking()
-        expected_ranking = schemas.Ranking(**jsonable_encoder(ranking_model))
+        group_model = create_group()
+        expected_group = schemas.Group(**jsonable_encoder(group_model))
 
         # unit under test
-        response = test_client.delete(f"/rankings/{ranking_model.id}")
+        response = test_client.delete(f"/groups/{group_model.id}")
 
         assert response.status_code == 200
-        assert expected_ranking == response.json()
+        assert expected_group == response.json()
 
-        response = test_client.get(f"rankings/{ranking_model.id}")
+        response = test_client.get(f"groups/{group_model.id}")
 
         assert response.status_code == 404
