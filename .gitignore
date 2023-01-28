@@ -136,3 +136,6 @@ dmypy.json
 
 # SQLite DB
 *.db
+
+# Auth0 config
+.config

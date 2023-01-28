@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from auth.utils import verify_token
 from database.database import get_session
 from database.database_service import DatabaseService
 from group import models as group_models
@@ -31,7 +32,12 @@ def override_get_session():
         db.close()
 
 
+def override_get_token():
+    return True
+
+
 APP.dependency_overrides[get_session] = override_get_session
+APP.dependency_overrides[verify_token] = override_get_token
 
 
 @pytest.fixture(name="test_client")
