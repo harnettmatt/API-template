@@ -16,7 +16,7 @@ def get_all(session: Session = Depends(get_session)) -> Any:
     """
     Gets all groups
     """
-    return DatabaseService(session).all(model_type=models.Item)
+    return DatabaseService(session).all(model_type=models.Group)
 
 
 @ROUTER.get("/{id}", response_model=schemas.Group)
@@ -24,7 +24,7 @@ def get(id: int, session: Session = Depends(get_session)) -> Any:
     """
     Gets a group by id
     """
-    return DatabaseService(session).get(id=id, model_type=models.Item)
+    return DatabaseService(session).get(id=id, model_type=models.Group)
 
 
 @ROUTER.post("/", response_model=schemas.Group)
@@ -32,7 +32,7 @@ def create(input: schemas.GroupCreate, session: Session = Depends(get_session)) 
     """
     Creates a group
     """
-    return DatabaseService(session).create(input_schema=input, model_type=models.Item)
+    return DatabaseService(session).create(input_schema=input, model_type=models.Group)
 
 
 @ROUTER.patch("/{id}", response_model=schemas.Group)
@@ -43,7 +43,7 @@ def update(
     Patch a group by id
     """
     return DatabaseService(session).update(
-        id=id, input_schema=input, model_type=models.Item
+        id=id, input_schema=input, model_type=models.Group
     )
 
 
@@ -52,4 +52,4 @@ def delete(id: int, session: Session = Depends(get_session)) -> Any:
     """
     Deletes a group by id
     """
-    return DatabaseService(session).delete(id=id, model_type=models.Item)
+    return DatabaseService(session).delete(id=id, model_type=models.Group)

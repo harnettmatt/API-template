@@ -43,7 +43,7 @@ def fixture_test_client():
 def mock_group() -> group_models.Group:
     group_input = group_schemas.GroupCreate(name="Ramen")
     return DatabaseService(next(override_get_session())).create(
-        input_schema=group_input, model_type=group_models.Item
+        input_schema=group_input, model_type=group_models.Group
     )
 
 
@@ -58,7 +58,7 @@ def mock_item() -> item_models.Item:
 @pytest.fixture(name="mock_membership")
 def mock_membership(mock_group, mock_item) -> membership_models.Membership:
     membership_input = membership_schemas.MembershipCreate(
-        group_id=mock_group.group_id, item_id=mock_item.item_id
+        group_id=mock_group.id, item_id=mock_item.id
     )
     return DatabaseService(next(override_get_session())).create(
         input_schema=membership_input, model_type=membership_models.Membership

@@ -39,18 +39,6 @@ def create(
     )
 
 
-@ROUTER.patch("/{id}", response_model=schemas.Membership)
-def update(
-    id: int, input: schemas.MembershipUpdate, session: Session = Depends(get_session)
-) -> Any:
-    """
-    Patch a membership by id
-    """
-    return DatabaseService(session).update(
-        id=id, input_schema=input, model_type=models.Membership
-    )
-
-
 @ROUTER.delete("/{id}", response_model=schemas.Membership)
 def delete(id: int, session: Session = Depends(get_session)) -> Any:
     """
