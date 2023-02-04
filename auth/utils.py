@@ -4,7 +4,7 @@ import os
 from configparser import ConfigParser
 
 import jwt
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer
 
 token_auth_scheme = HTTPBearer()
@@ -29,7 +29,7 @@ def get_config():
     return config
 
 
-def verify_token(token: str = Depends(token_auth_scheme), config=Depends(get_config)):
+def verify_token(token=Depends(token_auth_scheme), config=Depends(get_config)) -> dict:
     # This gets the 'kid' from the passed token
     jwks_url = f'https://{config["DOMAIN"]}/.well-known/jwks.json'
     try:
@@ -51,3 +51,13 @@ def verify_token(token: str = Depends(token_auth_scheme), config=Depends(get_con
         return {"status": "error", "message": str(e)}
 
     return payload
+
+
+def get_current_user_id(token=Depends(token_auth_scheme), config=Depends(get_config)):
+    response = verify_token(token=token, config=config)
+    if response.get("status"):
+        raise HTTPException(
+            status_code=400, detail=response.get("message", "Auth Error")
+        )
+
+    return response.get("sub")

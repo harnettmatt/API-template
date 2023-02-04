@@ -19,6 +19,7 @@ pytest-mock = "*"
 black = "*"
 httpx = "*" # https://github.com/tiangolo/fastapi/issues/5656
 mypy = "*"
+types-requests = "*"
 
 [requires]
 python_version = "3.9"
