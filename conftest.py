@@ -1,3 +1,6 @@
+import random
+import string
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -14,6 +17,8 @@ from main import APP
 from membership import models as membership_models
 from membership import schemas as membership_schemas
 from persistable.models import Base
+from user import models as user_models
+from user import schemas as user_schemas
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -38,8 +43,14 @@ def override_get_token():
     return True
 
 
+def generate_user_id():
+    return (
+        f'auth0|{"".join(random.choices(string.ascii_letters + string.digits, k=24))}'
+    )
+
+
 def override_get_current_user_id():
-    return MOCK_USERID
+    return generate_user_id()
 
 
 APP.dependency_overrides[get_session] = override_get_session
@@ -49,6 +60,21 @@ APP.dependency_overrides[get_current_user_id] = override_get_current_user_id
 @pytest.fixture(name="test_client")
 def fixture_test_client():
     return TestClient(APP)
+
+
+@pytest.fixture(name="mock_user_id")
+def mock_user_id() -> str:
+    return (
+        f'auth0|{"".join(random.choices(string.ascii_letters + string.digits, k=24))}'
+    )
+
+
+@pytest.fixture(name="mock_user")
+def mock_user(mock_user_id) -> user_models.User:
+    user_input = user_schemas.UserCreate(id=mock_user_id)
+    return DatabaseService(next(override_get_session())).create(
+        input_schema=user_input, model_type=user_models.User
+    )
 
 
 @pytest.fixture(name="mock_group")
