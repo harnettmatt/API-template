@@ -1,6 +1,7 @@
 """Module containing helpful object constructors for mocking purposes"""
-from user import schemas
 from utilities.tests.fixtures import get_mock_user_id
+
+from user import schemas
 
 
 def get_mock_user(id: str = get_mock_user_id()) -> schemas.User:

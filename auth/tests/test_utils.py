@@ -2,6 +2,7 @@ import pytest
 import requests
 
 from auth.utils import get_config, get_current_user_id, verify_token
+from conftest import MOCK_USERID
 
 
 @pytest.fixture(name="access_token")
@@ -41,4 +42,4 @@ class TestUtils:
         user_id = get_current_user_id(token=access_token, config=config)
 
         # user id for test@example.com in Auth0
-        assert user_id == "auth0|63da7455df8c0861a30e1c77"
+        assert user_id == MOCK_USERID

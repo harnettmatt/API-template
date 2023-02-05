@@ -37,7 +37,7 @@ def fixture_test_client():
 
 
 def create_user() -> models.User:
-    user_input = schemas.UserCreate(first_name="Matt", last_name="Harnett11")
+    user_input = schemas.UserCreate(id="")
     return DatabaseService(next(override_get_session())).create(
         input_schema=user_input, model_type=models.User
     )
