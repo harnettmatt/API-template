@@ -1,5 +1,5 @@
 """Module responsible for interacting with db via sqlalchemy"""
-from typing import Type
+from typing import Type, Union
 
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
@@ -7,6 +7,9 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from persistable.models import Persistable
+
+# User id is defined as a string and all other ids are autoincrementing
+ID = Union[str, int]
 
 
 class DatabaseService:
@@ -19,7 +22,7 @@ class DatabaseService:
     def __init__(self, session: Session):
         self.session = session
 
-    def get(self, id: int, model_type: Type[Persistable]):
+    def get(self, id: ID, model_type: Type[Persistable]):
         """
         Gets instance from db for a given model and id
         """
@@ -47,7 +50,7 @@ class DatabaseService:
 
         return model_instance
 
-    def delete(self, id: int, model_type: Type[Persistable]):
+    def delete(self, id: ID, model_type: Type[Persistable]):
         """
         Deletes instance from db for a given model and id
         """
@@ -57,7 +60,7 @@ class DatabaseService:
 
         return model_instance
 
-    def update(self, id: int, input_schema: BaseModel, model_type: Type[Persistable]):
+    def update(self, id: ID, input_schema: BaseModel, model_type: Type[Persistable]):
         """
         Gets instance from db, merges input_schema with db instance, update db instance
         """

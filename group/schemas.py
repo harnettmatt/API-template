@@ -3,11 +3,11 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-from id_base_model.schemas import IDBaseModel
+from id_base_model.schemas import IntIDBaseModel
 from item.schemas import Item
 
 
-class Group(IDBaseModel):
+class Group(IntIDBaseModel):
     """
     Pydantic model for Group
     """

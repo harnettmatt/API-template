@@ -3,10 +3,10 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from id_base_model.schemas import IDBaseModel
+from id_base_model.schemas import IntIDBaseModel
 
 
-class Membership(IDBaseModel):
+class Membership(IntIDBaseModel):
     """
     Pydantic model for Membership
     """

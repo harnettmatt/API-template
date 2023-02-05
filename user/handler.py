@@ -1,7 +1,7 @@
 """Routing handler for /users"""
 from typing import Any
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from auth.utils import get_current_user_id
@@ -43,22 +43,27 @@ def create(
     """
     Creates a user
     """
+    if input.id != user_id:
+        raise HTTPException(
+            400, "user id in payload and user id from token don't match"
+        )
     return DatabaseService(session).create(input_schema=input, model_type=models.User)
 
 
-@ROUTER.patch("/{id}", response_model=schemas.User)
-def update(
-    id: int,
-    input: schemas.UserUpdate,
-    session: Session = Depends(get_session),
-    user_id: str = Depends(get_current_user_id),
-) -> Any:
-    """
-    Patch a user by id
-    """
-    return DatabaseService(session).update(
-        id=id, input_schema=input, model_type=models.User
-    )
+# uncommment when patching is supported
+# @ROUTER.patch("/{id}", response_model=schemas.User)
+# def update(
+#     id: int,
+#     input: schemas.UserUpdate,
+#     session: Session = Depends(get_session),
+#     user_id: str = Depends(get_current_user_id),
+# ) -> Any:
+#     """
+#     Patch a user by id
+#     """
+#     return DatabaseService(session).update(
+#         id=id, input_schema=input, model_type=models.User
+#     )
 
 
 @ROUTER.delete("/{id}", response_model=schemas.User)

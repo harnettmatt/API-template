@@ -1,18 +1,13 @@
 """models for User"""
-from typing import Optional
-
 from pydantic import BaseModel
 
-from id_base_model.schemas import IDBaseModel
+from id_base_model.schemas import StrIDBaseModel
 
 
-class User(IDBaseModel):
+class User(StrIDBaseModel):
     """
     Pydantic model for User
     """
-
-    first_name: str
-    last_name: str
 
     class Config:
         # TODO: should this be moved to IDBaseModel
@@ -20,10 +15,8 @@ class User(IDBaseModel):
 
 
 class UserCreate(BaseModel):
-    first_name: str
-    last_name: str
+    id: str
 
 
-class UserUpdate(BaseModel):
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
+# uncomment when patching is supported
+# class UserUpdate(BaseModel):

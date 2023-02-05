@@ -1,5 +1,5 @@
 """Module containing sqlalchemy models"""
-from sqlalchemy import Column, String
+from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
 
 from item.models import Item  # noqa
@@ -14,6 +14,7 @@ class Group(Persistable):
 
     __tablename__ = "groups"
 
+    id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
     items = relationship("Item", secondary="memberships")
     # TODO: https://github.com/harnettmatt/rankings/issues/54

@@ -7,3 +7,7 @@ def get_mock_id():
     @return: int
     """
     return 0
+
+
+def get_mock_user_id():
+    return "0"

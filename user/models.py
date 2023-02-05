@@ -11,5 +11,4 @@ class User(Persistable):
 
     __tablename__ = "users"
 
-    first_name = Column(String)
-    last_name = Column(String)
+    id = Column(String, primary_key=True, index=True)
