@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from auth.utils import verify_token
+from auth.utils import get_current_user_id
 from database.database import get_session
 from database.database_service import DatabaseService
 from group import models as group_models
@@ -38,8 +38,12 @@ def override_get_token():
     return True
 
 
+def override_get_current_user_id():
+    return MOCK_USERID
+
+
 APP.dependency_overrides[get_session] = override_get_session
-APP.dependency_overrides[verify_token] = override_get_token
+APP.dependency_overrides[get_current_user_id] = override_get_current_user_id
 
 
 @pytest.fixture(name="test_client")
