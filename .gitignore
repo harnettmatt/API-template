@@ -138,4 +138,4 @@ dmypy.json
 *.db
 
 # Auth0 config
-.config
+*.config
