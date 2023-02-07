@@ -28,8 +28,6 @@ engine = create_engine(
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(bind=engine)
 
-MOCK_USERID = "auth0|63da7455df8c0861a30e1c77"
-
 
 def override_get_session():
     db = TestingSessionLocal()

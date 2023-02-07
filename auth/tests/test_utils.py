@@ -2,7 +2,6 @@ import pytest
 import requests
 
 from auth.utils import get_config, get_current_user_id, verify_token
-from conftest import MOCK_USERID
 
 
 @pytest.fixture(name="access_token")
@@ -13,8 +12,8 @@ def get_access_token():
         headers={"content-type": "application/x-www-form-urlencoded"},
         data={
             "grant_type": "password",
-            "username": config["USERNAME"],
-            "password": config["password"],
+            "username": config["TEST_USERNAME"],
+            "password": config["TEST_PASSWORD"],
             "client_id": config["CLIENT_ID"],
             "client_secret": config["CLIENT_SECRET"],
             "audience": config["API_AUDIENCE"],
@@ -42,4 +41,4 @@ class TestUtils:
         user_id = get_current_user_id(token=access_token, config=config)
 
         # user id for test@example.com in Auth0
-        assert user_id == MOCK_USERID
+        assert user_id == config["TEST_USER_ID"]
