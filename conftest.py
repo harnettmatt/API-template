@@ -62,9 +62,7 @@ def fixture_test_client():
 
 @pytest.fixture(name="mock_user_id")
 def mock_user_id() -> str:
-    return (
-        f'auth0|{"".join(random.choices(string.ascii_letters + string.digits, k=24))}'
-    )
+    return generate_user_id()
 
 
 @pytest.fixture(name="mock_user")
