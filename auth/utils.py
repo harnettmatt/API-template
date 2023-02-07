@@ -53,11 +53,17 @@ def verify_token(token=Depends(token_auth_scheme), config=Depends(get_config)) -
     return payload
 
 
-def get_current_user_id(token=Depends(token_auth_scheme), config=Depends(get_config)):
+def get_current_user_id(
+    token=Depends(token_auth_scheme), config=Depends(get_config)
+) -> str:
     response = verify_token(token=token, config=config)
     if response.get("status"):
         raise HTTPException(
             status_code=400, detail=response.get("message", "Auth Error")
         )
-
-    return response.get("sub")
+    user_id = response.get("sub")
+    if user_id is None:
+        raise HTTPException(
+            status_code=400, detail="token is valid, but user could not be identified"
+        )
+    return user_id
