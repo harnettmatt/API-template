@@ -8,7 +8,7 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
-    def test_get_all(test_client, mock_user):
+    def test_get_all(test_client, mock_random_user):
         """
         GIVEN: a GET request to /users
         THEN: a list of Users is returned
@@ -16,20 +16,20 @@ class TestHandler:
         response = test_client.get("/users/")
 
         assert response.status_code == 200
-        assert jsonable_encoder(mock_user) in response.json()
+        assert jsonable_encoder(mock_random_user) in response.json()
 
     @staticmethod
     @pytest.mark.integtest
-    def test_get(test_client, mock_user):
+    def test_get(test_client, mock_random_user):
         """
         GIVEN: a GET request to /users/{id}
         THEN: the corresponding user is returned
         """
         # unit under test
-        response = test_client.get(f"/users/{mock_user.id}")
+        response = test_client.get(f"/users/{mock_random_user.id}")
 
         assert response.status_code == 200
-        assert jsonable_encoder(mock_user) == response.json()
+        assert jsonable_encoder(mock_random_user) == response.json()
 
     @staticmethod
     @pytest.mark.integtest
@@ -59,18 +59,18 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
-    def test_delete(test_client, mock_user):
+    def test_delete(test_client, mock_random_user):
         """
         GIVEN: a DELETE request to /users/{id}
         THEN: the corresponding user is returned
         """
         # unit under test
-        response = test_client.delete(f"/users/{mock_user.id}")
+        response = test_client.delete(f"/users/{mock_random_user.id}")
 
         assert response.status_code == 200
-        assert jsonable_encoder(mock_user) == response.json()
+        assert jsonable_encoder(mock_random_user) == response.json()
 
-        response = test_client.get(f"users/{mock_user.id}")
+        response = test_client.get(f"users/{mock_random_user.id}")
 
         assert response.status_code == 404
 
