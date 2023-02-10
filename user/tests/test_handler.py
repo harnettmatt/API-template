@@ -2,6 +2,9 @@
 import pytest
 from fastapi.encoders import jsonable_encoder
 
+from conftest import override_get_session
+from user import handler, models
+
 
 class TestHandler:
     """Unit tests for /users routing handler"""
@@ -46,16 +49,21 @@ class TestHandler:
 
     @staticmethod
     @pytest.mark.integtest
-    def test_create(test_client):
+    def test_create(mock_random_user_id):
         """
-        GIVEN: a POST request to /users with a request body
+        NOTE: this test is invoking the handler directly because it is easier
+              to use dependency injection for the user id which is override
+              the global override
+
+        GIVEN: a request to create() user handler
         THEN: a User is created and returned
         """
 
-        response = test_client.post("/users/")
+        response = handler.create(
+            session=next(override_get_session()), user_id=mock_random_user_id
+        )
 
-        assert response.status_code == 200
-        assert "id" in response.json()
+        assert response == models.User(id=mock_random_user_id)
 
     @staticmethod
     @pytest.mark.integtest
